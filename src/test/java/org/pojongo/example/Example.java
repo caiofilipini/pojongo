@@ -9,8 +9,7 @@ public class Example implements IdentifiableDocument<ObjectId> {
 	private ObjectId id;
 	private String name;
 	private Integer number;
-	
-	@Transient
+		
 	private Long someValue;
 	
 	public Example() {
@@ -23,11 +22,28 @@ public class Example implements IdentifiableDocument<ObjectId> {
 		someValue = 3l;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+
+	public void setSomeValue(Long someValue) {
+		this.someValue = someValue;
+	}
+
 	@Override
 	public ObjectId getId() {
 		return id;
 	}
 	
+	@Override
+	public void setId(ObjectId id) {
+		this.id = id;
+		
+	}
 	public String getName() {
 		return name;
 	}
@@ -36,6 +52,7 @@ public class Example implements IdentifiableDocument<ObjectId> {
 		return number;
 	}
 	
+	@Transient
 	public Long getSomeValue() {
 		return someValue;
 	}
