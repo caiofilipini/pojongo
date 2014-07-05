@@ -3,10 +3,9 @@ package org.pojongo.example;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.pojongo.core.conversion.DefaultDocumentToObjectConverter;
-import org.pojongo.core.conversion.DefaultObjectToDocumentConverter;
 import org.pojongo.core.conversion.DocumentToObjectConverter;
 import org.pojongo.core.conversion.ObjectToDocumentConverter;
+import org.pojongo.core.conversion.PojongoConverterFactory;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -25,8 +24,8 @@ public class ConversionExample {
 		listExistingExamples(examples);
 	}
 
-	private static void listExistingExamples(DBCollection examples) {
-		DocumentToObjectConverter converter = new DefaultDocumentToObjectConverter();
+	private static void listExistingExamples(DBCollection examples) throws IllegalArgumentException, Exception {
+		DocumentToObjectConverter converter = PojongoConverterFactory.getInstance().getDefaultDocumentConverter();;
 		List<Example> exampleList = new ArrayList<Example>();
 		DBCursor cursor = examples.find();
 		
@@ -41,7 +40,9 @@ public class ConversionExample {
 	}
 
 	private static void saveNewExamples(DBCollection examples) {
-		ObjectToDocumentConverter converter = new DefaultObjectToDocumentConverter();
+		ObjectToDocumentConverter converter = PojongoConverterFactory
+			.getInstance()
+			.getDefaultObjectConverter();
 		
 		Example oneExample = new Example("first example", 1);
 		examples.save(converter.from(oneExample).toDocument());
